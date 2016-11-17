@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "install-deps": "npm install bower -g && bower install && npm install"
+    "install-deps": "npm install bower -g && bower install --allow-root && npm install"
   },
   "repository": {
     "type": "git",
