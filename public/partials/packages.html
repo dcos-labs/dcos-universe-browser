@@ -1,0 +1,20 @@
+<section id="packages">
+    <div class="container">
+
+        <div class="row" ng-repeat="row in rows track by $index">
+            <div class="col-md-2 packageList" ng-repeat="pkg in row track by $index">
+                <div class="thumbnail">
+                    <a ng-href="#/package/{{pkg.name}}/version/latest"><img ng-src="{{pkg.images['icon-medium']}}" /></a>
+                    <div class="caption">
+                        <h4 class="">{{pkg.name}}</h4>
+
+                        <p>{{pkg.description | characters:50 }} <!--<br/><a ng-href="#/package/{{pkg.name}}/version/latest" class="btn btn-default btn-xs" role="button">more</a></p>-->
+                        <a ng-href="#/package/{{pkg.name}}/version/latest"><span class="label label-info">more</span></a></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

@@ -1,0 +1,23 @@
+# Logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Dependency directories
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# WebStorm files
+.idea/
+.idea/*.xml
+
+# Bower components
+public/vendor
+
+.DS_Store

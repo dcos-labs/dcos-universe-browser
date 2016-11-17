@@ -1,0 +1,110 @@
+<section id="package">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row" ng-if="notFound">
+                    <div class="col-sm-12">
+                        <h2>A package {{packageInfo.name}} in version {{packageInfo.version}} doesn't exist!</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                        <img ng-src="{{packageInfo.images['icon-medium']}}" width="96" height="96"/><br/><span class="label label-default">{{packageInfo.version}}</span>
+                    </div>
+                    <div class="col-sm-10">
+                        <h2>{{packageInfo.name}}</h2>
+                    </div>
+                </div>
+                <div class="row spacer" style="margin-top: 30px;">
+                    <div class="col-sm-2 package-property">
+                        <b>Description:</b>
+                    </div>
+                    <div class="col-sm-8" ng-bind-html="packageInfo.description">
+                    </div>
+                </div>
+                <div class="row spacer">
+                    <div class="col-sm-2 package-property">
+                        <b>Example:</b>
+                    </div>
+                    <div class="col-sm-8" ng-if="packageInfo.hasExample">
+                        <a ng-href="#/package/{{packageInfo.name}}/docs"><span class="label label-success">Available</span></a>
+                    </div>
+                    <div class="col-sm-8" ng-if="!packageInfo.hasExample">
+                        <span class="label label-danger">Coming soon!</span>
+                    </div>
+                </div>
+                <div class="row spacer">
+                    <div class="col-sm-2 package-property">
+                        <b>Tags:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <span ng-repeat="tag in packageInfo.tags track by $index">
+                            <span class="label label-info">{{packageInfo.tags[$index]}}</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="row spacer" ng-if="packageInfo.website">
+                    <div class="col-sm-2 package-property">
+                        <b>Website:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <a ng-href="{{packageInfo.website}}" target="_blank">{{packageInfo.website}}</a>
+                    </div>
+                </div>
+                <div class="row spacer" ng-if="packageInfo.scm">
+                    <div class="col-sm-2 package-property">
+                        <b>SCM:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <a ng-href="{{packageInfo.scm}}" target="_blank">{{packageInfo.scm}}</a>
+                    </div>
+                </div>
+                <div class="row spacer" ng-if="packageInfo.maintainer">
+                    <div class="col-sm-2 package-property">
+                        <b>Maintainer:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <a ng-href="mailto:{{packageInfo.maintainer}}" target="_blank">{{packageInfo.maintainer}}</a>
+                    </div>
+                </div>
+                <div class="row spacer">
+                    <div class="col-sm-2 package-property">
+                        <b>Packaging version:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <span class="label label-info">{{packageInfo.packagingVersion}}</span>
+                    </div>
+                </div>
+                <div class="row spacer">
+                    <div class="col-sm-2 package-property">
+                        <b>Release version:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <span class="label label-info">{{packageInfo.releaseVersion}}</span>
+                    </div>
+                </div>
+                <div class="row spacer">
+                    <div class="col-sm-2 package-property">
+                        <b>Versions:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <a ng-href="#/package/{{packageInfo.name}}/version/latest"><span class="label label-primary">latest</span></a>
+                        <span ng-repeat="version in packageInfo.versions track by $index">
+                            <a ng-href="#/package/{{packageInfo.name}}/version/{{packageInfo.versions[$index]}}"><span class="label label-info">{{packageInfo.versions[$index]}}</span></a>
+                        </span>
+                    </div>
+                </div>
+                <div class="row spacer">
+                    <div class="col-sm-2 package-property">
+                        <b>Licenses:</b>
+                    </div>
+                    <div class="col-sm-8" ng-if="packageInfo.licenses">
+                        <span ng-repeat="license in packageInfo.licenses track by $index">
+                            <a ng-href="{{license.url}}" target="_blank"><span class="label label-info">{{packageInfo.licenses[$index].name}}</span></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

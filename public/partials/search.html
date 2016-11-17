@@ -1,0 +1,29 @@
+<header style="min-height: 100%">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="header-content">
+                    <div class="header-content-inner">
+                        <h1>Search and browse the packages of the DC/OS Universe!</h1>
+                        <form>
+
+                            <script type="text/ng-template" id="customTemplate.html">
+                                <a>
+                                    <div class="row dropdown-row">
+                                        <div class="col-sm-1">
+                                            <img ng-src="{{match.model.images['icon-small']}}" width="16">
+                                        </div>
+                                        <div class="col-sm-3" ng-bind-html="match.label | uibTypeaheadHighlight:query"></div>
+                                    </div>
+                                </a>
+                            </script>
+
+                            <input type="text" ng-model="selectedPackage" placeholder="Universe packages" uib-typeahead="pkag as pkag.name for pkag in searchPackages($viewValue)" typeahead-template-url="customTemplate.html" typeahead-on-select="showPackageDetails($item, $model, $label, $event)" typeahead-wait-ms="25" class="form-control input-lg transparent-input">
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

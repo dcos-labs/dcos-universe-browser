@@ -1,0 +1,30 @@
+{
+  "name": "dcos-universe-browser",
+  "main": "index.js",
+  "version": "0.1.0",
+  "homepage": "https://github.com/tobilg/dcos-universe-browser",
+  "authors": [
+    "tobilg <tobilg@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "4.7.0",
+    "bootstrap": "3.3.7",
+    "angular": "1.5.8",
+    "angular-resource": "1.5.8",
+    "angular-route": "1.5.8",
+    "angular-bootstrap": "^2.2.0",
+    "angular-ui-select": "^0.19.6",
+    "angular-sanitize": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-touch": "^1.5.8",
+    "angular-truncate": "*"
+  }
+}
