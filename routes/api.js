@@ -180,6 +180,28 @@ var loadRepository = function () {
                     }
                 }
 
+                var imagesObj = {};
+                var screenshots = {};
+
+                // Replace plain http image urls with https urls, to get rid of mixed-content warnings
+                // Workaround for excluding erroneous packages"dynatrace", "sysdig-cloud" -> Remove once they're fixed
+                if (packageObj.resource.images && Object.getOwnPropertyNames(packageObj.resource.images).length > 0 && ["dynatrace", "sysdig-cloud"].indexOf(packageObj.name) === -1) {
+                    if (packageObj.resource.images.screenshots) {
+                        screenshots = packageObj.resource.images.screenshots;
+                        delete packageObj.resource.images.screenshots;
+                    }
+                    Object.getOwnPropertyNames(packageObj.resource.images).forEach(function (imageType) {
+                        imagesObj[imageType] = packageObj.resource.images[imageType].replace(/^http:\/\//i, 'https://');
+                    });
+                } else {
+                    // Assign placeholder images in the correct dimensions
+                    imagesObj = {
+                        "icon-small": "http://placehold.it/48x48&text=" + packageObj.name,
+                        "icon-medium": "http://placehold.it/96x96&text=" + packageObj.name,
+                        "icon-large": "http://placehold.it/256x256&text=" + packageObj.name
+                    }
+                }
+
                 // Create smaller packageObj
                 var smallPackageObj = {
                     id: packageObj.name + "-" + packageObj.releaseVersion,
@@ -198,7 +220,8 @@ var loadRepository = function () {
                     postInstallNotes: packageObj.postInstallNotes || null,
                     postUninstallNotes: packageObj.postUninstallNotes || null,
                     licenses: packageObj.licenses || null,
-                    images: (packageObj.resource && packageObj.resource.images ? packageObj.resource.images : null),
+                    images: imagesObj,
+                    screenshots: screenshots || null,
                     hasExample : ((exampleCache[packageObj.name] && exampleCache[packageObj.name].hasOwnProperty("enabled")) ? exampleCache[packageObj.name].enabled : false)
                 };
 
