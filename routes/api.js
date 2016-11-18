@@ -196,9 +196,9 @@ var loadRepository = function () {
                 } else {
                     // Assign placeholder images in the correct dimensions
                     imagesObj = {
-                        "icon-small": "http://placehold.it/48x48&text=" + packageObj.name,
-                        "icon-medium": "http://placehold.it/96x96&text=" + packageObj.name,
-                        "icon-large": "http://placehold.it/256x256&text=" + packageObj.name
+                        "icon-small": "https://placehold.it/48x48&text=" + packageObj.name,
+                        "icon-medium": "https://placehold.it/96x96&text=" + packageObj.name,
+                        "icon-large": "https://placehold.it/256x256&text=" + packageObj.name
                     }
                 }
 
