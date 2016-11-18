@@ -1,0 +1,3 @@
+[submodule "dcos-examples"]
+	path = dcos-examples
+	url = https://github.com/dcos/examples.git
