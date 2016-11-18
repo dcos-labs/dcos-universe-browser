@@ -11,7 +11,9 @@ ENV APP_DIR /usr/local/${APP_NAME}
 # Set node env to production, so that npm install doesn't install the devDependencies
 ENV NODE_ENV production
 
-RUN cd /usr/local && \
+RUN apk update && \
+    apk add git && \
+    cd /usr/local && \
     git clone https://github.com/tobilg/dcos-universe-browser.git && \
     npm set progress=false && \
     npm install bower -g && \
