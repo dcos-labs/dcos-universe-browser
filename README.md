@@ -47,12 +47,20 @@ You can use the following environment variables to influence the application's b
 
 ## Application details
 
+How is it built?
+
+* The backend is a Node.js application, using Express.js to serve static files, and a REST API which is a wrapper around the Universe data.
+* The frontend is an Angular 1 app, using Bootstrap 3 and various third-party modules.
+
 What does this application do?
 
 * It fetches the DC/OS Universe information from `https://universe.mesosphere.com/repo`, optimizes the data structures for UI usage, and caches it until the next request interval.
 * It clones the [dcos/examples](https://github.com/dcos/examples) project, containing the DC/OS package examples, and merges them with the Universe information. The markdown is rendered as HTML dynamically.
+* It renders the combined data as a web application (see above).
 
 ## Roadmap
 
 * Improvements for mobile.
 * Create package `options.json` files via UI for usage with the DC/OS CLI.
+* Add dynamic meta tags & sharing support, via [jvandemo/angular-update-meta](https://github.com/jvandemo/angular-update-meta).
+* Integrate [prerender.io](http://www.prerender.io) to optimize for search engines.
