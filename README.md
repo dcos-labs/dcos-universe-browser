@@ -50,7 +50,7 @@ You can use the following environment variables to influence the application's b
 What does this application do?
 
 * It fetches the DC/OS Universe information from `https://universe.mesosphere.com/repo`, optimizes the data structures for UI usage, and caches it until the next request interval.
-* It clones to [dcos/examples](https://github.com/dcos/examples) project, containing the DC/OS package examples, and merges them with the Universe information. The markdown is rendered as HTML dynamically.
+* It clones the [dcos/examples](https://github.com/dcos/examples) project, containing the DC/OS package examples, and merges them with the Universe information. The markdown is rendered as HTML dynamically.
 
 ## Roadmap
 
