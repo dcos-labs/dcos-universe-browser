@@ -9,7 +9,7 @@
                         <h4 class="">{{pkg.name}}</h4>
 
                         <p>{{pkg.description | characters:50 }} <!--<br/><a ng-href="#/package/{{pkg.name}}/version/latest" class="btn btn-default btn-xs" role="button">more</a></p>-->
-                        <a ng-href="#/package/{{pkg.name}}/version/latest"><span class="label label-info">more</span></a></p>
+                        <a ng-href="#/package/{{pkg.name}}/version/latest"analytics-on="click" analytics-event="View package details" analytics-label="{{pkg.name}}"><span class="label label-info">more</span></a></p>
 
                     </div>
                 </div>

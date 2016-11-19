@@ -27,7 +27,7 @@
                         <b>Example:</b>
                     </div>
                     <div class="col-sm-8" ng-if="packageInfo.hasExample">
-                        <a ng-href="#/package/{{packageInfo.name}}/docs"><span class="label label-success">Available</span></a>
+                        <a ng-href="#/package/{{packageInfo.name}}/docs" analytics-on analytics-event="View example" analytics-category="Examples" analytics-label="{{packageInfo.name}}"><span class="label label-success">Available</span></a>
                     </div>
                     <div class="col-sm-8" ng-if="!packageInfo.hasExample">
                         <span class="label label-danger">Coming soon!</span>
