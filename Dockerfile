@@ -15,9 +15,10 @@ RUN apk update && \
     apk add git && \
     cd /usr/local && \
     git clone https://github.com/tobilg/dcos-universe-browser.git && \
+    cd ${APP_DIR} && \
     npm set progress=false && \
     npm install bower -g && \
-    bower install --allow-root && \
+    bower install --allow-root --force-latest && \
     npm install --silent
 
 # Change the workdir to the app's directory
