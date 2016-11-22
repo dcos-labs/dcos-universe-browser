@@ -14,7 +14,7 @@ ENV NODE_ENV production
 RUN apk update && \
     apk add git && \
     cd /usr/local && \
-    git clone https://github.com/tobilg/dcos-universe-browser.git && \
+    git clone https://github.com/dcos-labs/dcos-universe-browser.git && \
     cd ${APP_DIR} && \
     npm set progress=false && \
     npm install bower -g && \
