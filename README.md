@@ -4,7 +4,7 @@ The repository provides a web application for browsing the DC/OS Universe packag
 
 ## Using
 
-You can find the deployed application at [https://universe.serv.sh](https://universe.serv.sh), install it locally, or use the [tobilg/dcos-universe-browser](https://hub.docker.com/r/tobilg/dcos-universe-browser/) Docker image.
+You can find the deployed application at [https://universe.serv.sh](https://universe.serv.sh), install it locally, or use the [dcoslabs/dcos-universe-browser](https://hub.docker.com/r/dcoslabs/dcos-universe-browser/) Docker image.
 
 ## Installation
 
@@ -17,7 +17,7 @@ You can find the deployed application at [https://universe.serv.sh](https://univ
 
 You can host a local instance via
 
-    git clone https://github.com/tobilg/dcos-universe-browser.git
+    git clone https://github.com/dcos-labs/dcos-universe-browser.git
     
 and installing the dependencies with
 
@@ -31,7 +31,7 @@ and starting the application with
 
 You can run the application via a Docker image like this:
 
-    docker run -d --name dcos-universe-browser -p 3000:3000 tobilg/dcos-universe-browser
+    docker run -d --name dcos-universe-browser -p 3000:3000 dcoslabs/dcos-universe-browser
     
 This will expose the application on port `3000` on the Docker host.
 
