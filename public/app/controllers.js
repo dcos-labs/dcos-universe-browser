@@ -102,7 +102,7 @@ controllers.controller('PackageController', function($scope, PackageVersion, Pac
 
 });
 
-controllers.controller('PackageDocsController', function($scope, config, $http, PackageVersion, PackageDocs, $routeParams) {
+controllers.controller('PackageDocsController', function($scope, config, $http, $sce, $location, $anchorScroll, PackageVersion, PackageDocs, $routeParams) {
 
     // Top menu
     $scope.$parent.transparencyOn = false;
@@ -114,6 +114,10 @@ controllers.controller('PackageDocsController', function($scope, config, $http, 
     $scope.exampleHtml = "";
 
     $scope.notFound = false;
+
+    $scope.to_trusted = function(html_code) {
+        return $sce.trustAsHtml(html_code);
+    };
 
     if (!$routeParams.version) {
         $routeParams.version = "latest";
@@ -134,8 +138,10 @@ controllers.controller('PackageDocsController', function($scope, config, $http, 
             $http({method: "GET", url: URL})
                 .success(function (data) {
                     $scope.exampleHtml = data;
+                    if($location.hash()) {
+                        $anchorScroll();
+                    }
                 });
-
         }
     });
 

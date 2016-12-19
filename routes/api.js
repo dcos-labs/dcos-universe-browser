@@ -42,6 +42,7 @@ mkdirp(dcosExamplesFolder, function (err) {
         console.log("Created folder for repo dcos/examples");
         // Instantiate git
         git = require('simple-git')(dcosExamplesFolder);
+        console.log("Instantiated git");
         // Clone the repo
         git.clone("https://github.com/dcos/examples.git", dcosExamplesFolder, {}, function (err, result) {
             if (err) {
@@ -86,6 +87,9 @@ function fillExamples() {
     // Read the folder/file structure
     var folderStructure = fs2obj(dcosExamplesFolder + "/1.8");
 
+    // RegExp for finding anchor links in the markdown files
+    var relativeLinkRegExp = /\(#(.*?)\)/g; // Matches "(#my-test-link)" as "my-test-link"
+
     // Reset exampleCache
     exampleCache = {};
 
@@ -94,12 +98,24 @@ function fillExamples() {
         // Use folders
         if (item.type === "folder") {
             var packageName = item.name.toLowerCase();
+            // Set baseUrl
             var baseUrl = "https://raw.githubusercontent.com/dcos/examples/master/1.8/" + packageName;
             // Read README.md contents
             var exampleContents = fs.readFileSync(dcosExamplesFolder + "/1.8/" + packageName + "/README.md", "utf8").toString();
+            // Get relative links
+            var relativeLinks = exampleContents.match(relativeLinkRegExp);
+            // Handle relative links -> Replace with full link including the anchor
+            relativeLinks.forEach(function (relativeLink) {
+                var bareLink = relativeLink.replace("(", "").replace(")", "").replace(/-/g, "");
+                var replaceRelativeLink = "(/#/package/" + packageName + "/docs" + bareLink + ")";
+                exampleContents = exampleContents.replace(relativeLink, replaceRelativeLink)
+            });
+            // Convert to HTML and replace image sources
+            var htmlCode = converter.makeHtml(exampleContents).replace(/img\//g, baseUrl + "/img/"); // Replace relative URL with absolute URL
+
             // There is an example for this package
             exampleCache[packageName] = {
-                renderedHtml: converter.makeHtml(exampleContents).replace(/img\//g, baseUrl + "/img/"), // Replace relative URL with absolute URL
+                renderedHtml: htmlCode,
                 enabled: true
             };
         }
@@ -290,43 +306,17 @@ router.get("/package/:packageName/docs", function(req, res) {
         // Check if there there's already a renderedHtml property
         if (exampleCache.hasOwnProperty(req.params.packageName) && exampleCache[req.params.packageName].renderedHtml) {
 
+            console.log("--------");
+            console.log(exampleCache[req.params.packageName].renderedHtml);
             // Send renderedHtml
             res.send(exampleCache[req.params.packageName].renderedHtml);
 
         } else {
-
-            var baseUrl = "https://raw.githubusercontent.com/dcos/examples/master/1.8/" + req.params.packageName;
-
-            request({
-                method: "GET",
-                uri: baseUrl + "/README.md"
-            }, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-
-                    var renderedHtml = converter.makeHtml(body).replace(/img\//g, baseUrl + "/img/"); // Replace relative URL with absolute URL
-
-                    // There is an example for this package
-                    exampleCache[req.params.packageName] = {
-                        renderedHtml: renderedHtml,
-                        interval: setInterval(function() { loadExample(req.params.packageName); } , 60000),
-                        enabled: true
-                    };
-
-                    res.send(renderedHtml);
-
-                } else {
-                    exampleCache[req.params.packageName] = {
-                        interval: setInterval(function() { loadExample(req.params.packageName); } , 60000),
-                        enabled: false
-                    };
-                    res.status(404).send("");
-                }
-            });
-
+            res.status(404).json({ error: "No rendered example found for " + req.params.packageName });
         }
 
     } else {
-        res.status(404).send("");
+        res.status(404).json({ error: "No matching package found!" });
     }
 
 });
