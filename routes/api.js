@@ -104,12 +104,15 @@ function fillExamples() {
             var exampleContents = fs.readFileSync(dcosExamplesFolder + "/1.8/" + packageName + "/README.md", "utf8").toString();
             // Get relative links
             var relativeLinks = exampleContents.match(relativeLinkRegExp);
-            // Handle relative links -> Replace with full link including the anchor
-            relativeLinks.forEach(function (relativeLink) {
-                var bareLink = relativeLink.replace("(", "").replace(")", "").replace(/-/g, "");
-                var replaceRelativeLink = "(/#/package/" + packageName + "/docs" + bareLink + ")";
-                exampleContents = exampleContents.replace(relativeLink, replaceRelativeLink)
-            });
+            // Check if anchor links found
+            if (relativeLinks && relativeLinks.length > 0) {
+                // Handle relative links -> Replace with full link including the anchor
+                relativeLinks.forEach(function (relativeLink) {
+                    var bareLink = relativeLink.replace("(", "").replace(")", "").replace(/-/g, "");
+                    var replaceRelativeLink = "(/#/package/" + packageName + "/docs" + bareLink + ")";
+                    exampleContents = exampleContents.replace(relativeLink, replaceRelativeLink)
+                });
+            }
             // Convert to HTML and replace image sources
             var htmlCode = converter.makeHtml(exampleContents).replace(/img\//g, baseUrl + "/img/"); // Replace relative URL with absolute URL
 
@@ -306,8 +309,6 @@ router.get("/package/:packageName/docs", function(req, res) {
         // Check if there there's already a renderedHtml property
         if (exampleCache.hasOwnProperty(req.params.packageName) && exampleCache[req.params.packageName].renderedHtml) {
 
-            console.log("--------");
-            console.log(exampleCache[req.params.packageName].renderedHtml);
             // Send renderedHtml
             res.send(exampleCache[req.params.packageName].renderedHtml);
 
