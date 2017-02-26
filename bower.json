@@ -27,5 +27,8 @@
     "angular-touch": "^1.5.8",
     "angular-truncate": "*",
     "angulartics-google-analytics": "^0.3.0"
+  },
+  "resolutions": {
+    "angular": "1.5.8"
   }
 }
