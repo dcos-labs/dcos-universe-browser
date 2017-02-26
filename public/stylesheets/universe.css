@@ -61,7 +61,7 @@
 
 @media (min-width: 768px) {
   .packageList .thumbnail {
-    min-height: 280px;
+    min-height: 250px;
   }
 }
 
@@ -70,7 +70,8 @@
   margin-bottom: 10px;
   max-width: 96px;
   max-height: 96px;
-  height: 100%
+  min-width: 96px;
+  height: 100%;
 }
 
 .row .spacer {
@@ -379,4 +380,22 @@ img::-moz-selection {
 }
 body {
   webkit-tap-highlight-color: #222222;
+}
+
+.list-middle {
+  margin-top: 0px;
+  text-align: center;
+  vertical-align: top;
+}
+
+.list-header {
+  font-size: 20px;
+  margin-top: 0px;
+  text-align: center;
+  height: 65px;
+  vertical-align: top;
+}
+
+.caption a {
+  text-decoration: none;
 }
