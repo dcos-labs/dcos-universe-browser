@@ -14,6 +14,11 @@ var api = require("./routes/api");
 // Create the Express object
 var app = express();
 
+// Get real ip if passed by nginx
+morgan.token("remote-addr", function (req) {
+    return req.headers["x-real-ip"] || req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+});
+
 // Define log directory
 var logDirectory = path.join(__dirname, config.application.logFolder);
 
