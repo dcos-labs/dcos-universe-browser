@@ -1,0 +1,9 @@
+# robots.txt for http://universe.serv.sh/
+
+User-agent: *
+
+Disallow: /api
+Disallow: /vendor
+Disallow: /stylesheets
+Disallow: /partials
+Disallow: /app
