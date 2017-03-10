@@ -1,7 +1,7 @@
 {
   "name": "dcos-universe-browser",
-  "version": "0.1.2",
-  "description": "A browser for the Mesosphere Universe",
+  "version": "0.1.3",
+  "description": "A browser for the Mesosphere DC/OS Universe",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
