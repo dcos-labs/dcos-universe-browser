@@ -392,4 +392,10 @@ router.get("/package/:packageName/releaseVersions", function(req, res) {
 
 });
 
+router.get("/health", function(req, res) {
+
+    res.send("OK");
+
+});
+
 module.exports = router;
