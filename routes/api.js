@@ -99,9 +99,9 @@ function fillExamples() {
         if (item.type === "folder") {
             var packageName = item.name.toLowerCase();
             // Set baseUrl
-            var baseUrl = "https://raw.githubusercontent.com/dcos/examples/master/1.8/" + packageName;
+            var baseUrl = "https://raw.githubusercontent.com/dcos/examples/master/" + packageName + "/1.8/";
             // Read README.md contents
-            var exampleContents = fs.readFileSync(dcosExamplesFolder + "/1.8/" + packageName + "/README.md", "utf8").toString();
+            var exampleContents = fs.readFileSync(dcosExamplesFolder + "/" + packageName + "/1.8/README.md", "utf8").toString();
             // Get relative links
             var relativeLinks = exampleContents.match(relativeLinkRegExp);
             // Check if anchor links found
@@ -204,7 +204,7 @@ var loadRepository = function () {
 
                 // Replace plain http image urls with https urls, to get rid of mixed-content warnings
                 // Workaround for excluding erroneous packages"dynatrace", "sysdig-cloud" -> Remove once they're fixed
-                if (packageObj.resource.images && Object.getOwnPropertyNames(packageObj.resource.images).length > 0 && ["dynatrace", "sysdig-cloud"].indexOf(packageObj.name) === -1) {
+                if (packageObj.resource && packageObj.resource.images && Object.getOwnPropertyNames(packageObj.resource.images).length > 0 && ["dynatrace", "sysdig-cloud"].indexOf(packageObj.name) === -1) {
                     if (packageObj.resource.images.screenshots) {
                         screenshots = packageObj.resource.images.screenshots;
                         delete packageObj.resource.images.screenshots;
