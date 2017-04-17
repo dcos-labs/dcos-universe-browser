@@ -1,0 +1,42 @@
+{
+  "id": "/dcos-universe-browser",
+  "instances": 1,
+  "cpus": 0.5,
+  "mem": 1024,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "image": "dcoslabs/dcos-universe-browser:0.1.5",
+      "network": "HOST",
+      "privileged": false,
+      "forcePullImage": false
+    }
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 5,
+      "intervalSeconds": 20,
+      "timeoutSeconds": 20,
+      "maxConsecutiveFailures": 3,
+      "portIndex": 0,
+      "path": "/health",
+      "protocol": "HTTP",
+      "ignoreHttp1xx": false
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 0,
+      "protocol": "tcp",
+      "name": "http",
+      "labels": {
+        "VIP_0": "dcos-universe-browser:80"
+      }
+    }
+  ],
+  "requirePorts": false,
+  "labels": {
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_VHOST": "<YOUR_PUBLIC_ELB_HOSTNAME>"
+  }
+}
