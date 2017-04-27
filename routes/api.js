@@ -85,7 +85,7 @@ mkdirp(dcosExamplesFolder, function (err) {
 function fillExamples() {
 
     // Read the folder/file structure
-    var folderStructure = fs2obj(dcosExamplesFolder + "/1.8");
+    var folderStructure = fs2obj(dcosExamplesFolder);
 
     // RegExp for finding anchor links in the markdown files
     var relativeLinkRegExp = /\(#(.*?)\)/g; // Matches "(#my-test-link)" as "my-test-link"
@@ -96,31 +96,42 @@ function fillExamples() {
     // Iterate over items
     folderStructure.items.forEach(function (item) {
         // Use folders
-        if (item.type === "folder") {
+        if (item.type === "folder" && item.name !== "1.8") {
             var packageName = item.name.toLowerCase();
             // Set baseUrl
-            var baseUrl = "https://raw.githubusercontent.com/dcos/examples/master/" + packageName + "/1.8/";
-            // Read README.md contents
-            var exampleContents = fs.readFileSync(dcosExamplesFolder + "/" + packageName + "/1.8/README.md", "utf8").toString();
-            // Get relative links
-            var relativeLinks = exampleContents.match(relativeLinkRegExp);
-            // Check if anchor links found
-            if (relativeLinks && relativeLinks.length > 0) {
-                // Handle relative links -> Replace with full link including the anchor
-                relativeLinks.forEach(function (relativeLink) {
-                    var bareLink = relativeLink.replace("(", "").replace(")", "").replace(/-/g, "");
-                    var replaceRelativeLink = "(/#/package/" + packageName + "/docs" + bareLink + ")";
-                    exampleContents = exampleContents.replace(relativeLink, replaceRelativeLink)
-                });
+            var baseUrl = "https://raw.githubusercontent.com/dcos/examples/master/" + packageName + "/";
+            // Example version
+            var exampleVersion = null;
+            // Check if 1.9 example exists
+            if (fs.existsSync(dcosExamplesFolder + "/" + packageName + "/1.9/README.md")) {
+                exampleVersion = "1.9";
+            } else if (fs.existsSync(dcosExamplesFolder + "/" + packageName + "/1.8/README.md")) {
+                exampleVersion = "1.8";
             }
-            // Convert to HTML and replace image sources
-            var htmlCode = converter.makeHtml(exampleContents).replace(/img\//g, baseUrl + "/img/"); // Replace relative URL with absolute URL
+            // Check if we have a valid example
+            if (exampleVersion) {
+                // Read README.md contents
+                var exampleContents = fs.readFileSync(dcosExamplesFolder + "/" + packageName + "/" + exampleVersion + "/README.md", "utf8").toString();
+                // Get relative links
+                var relativeLinks = exampleContents.match(relativeLinkRegExp);
+                // Check if anchor links found
+                if (relativeLinks && relativeLinks.length > 0) {
+                    // Handle relative links -> Replace with full link including the anchor
+                    relativeLinks.forEach(function (relativeLink) {
+                        var bareLink = relativeLink.replace("(", "").replace(")", "").replace(/-/g, "");
+                        var replaceRelativeLink = "(/#/package/" + packageName + "/docs" + bareLink + ")";
+                        exampleContents = exampleContents.replace(relativeLink, replaceRelativeLink)
+                    });
+                }
+                // Convert to HTML and replace image sources
+                var htmlCode = converter.makeHtml(exampleContents).replace(/img\//g, baseUrl + "/" + exampleVersion + "/img/"); // Replace relative URL with absolute URL
 
-            // There is an example for this package
-            exampleCache[packageName] = {
-                renderedHtml: htmlCode,
-                enabled: true
-            };
+                // There is an example for this package
+                exampleCache[packageName] = {
+                    renderedHtml: htmlCode,
+                    enabled: true
+                };
+            }
         }
     });
 
@@ -152,7 +163,10 @@ var packages = {
     list: []
 };
 
-//
+// Tags
+var tags = {};
+
+// Reset packages function
 var resetPackages = function () {
     packages.index = lunr(function () {
         this.field("name");
@@ -164,6 +178,11 @@ var resetPackages = function () {
     // Reset other properties
     packages.list.length = 0;
     packages.map = {};
+};
+
+// Reset tags function
+var resetTags = function () {
+    tags = {};
 };
 
 function generateSortFn(prop, reverse) {
@@ -182,6 +201,9 @@ var loadRepository = function () {
 
             // Reset package singleton
             resetPackages();
+
+            // Reset tags singleton
+            resetTags();
 
             // Create temporary array
             var tempPackagesArray = [];
@@ -271,7 +293,21 @@ var loadRepository = function () {
                     tags: latestPackageVersion.tags,
                     releaseVersion: latestPackageVersion.releaseVersion
                 });
+                // Add tags
+                if (latestPackageVersion.tags && Array.isArray(latestPackageVersion.tags)) {
+                    latestPackageVersion.tags.forEach(function (tag) {
+                        if (!tags.hasOwnProperty(tag.toLowerCase())) {
+                            tags[tag.toLowerCase()] = {
+                                count: 0,
+                                packages: []
+                            };
+                        }
+                        tags[tag.toLowerCase()].count++;
+                        tags[tag.toLowerCase()].packages.push(latestPackageVersion.name);
+                    });
+                }
             });
+            console.log(JSON.stringify(tags));
 
             // Store the array as pac
             packages.list = tempPackagesArray.sort(generateSortFn("name", false));
@@ -395,6 +431,12 @@ router.get("/package/:packageName/releaseVersions", function(req, res) {
 router.get("/health", function(req, res) {
 
     res.send("OK");
+
+});
+
+router.get("/tags", function(req, res) {
+
+    res.json(tags);
 
 });
 
