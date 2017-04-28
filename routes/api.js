@@ -296,14 +296,17 @@ var loadRepository = function () {
                 // Add tags
                 if (latestPackageVersion.tags && Array.isArray(latestPackageVersion.tags)) {
                     latestPackageVersion.tags.forEach(function (tag) {
-                        if (!tags.hasOwnProperty(tag.toLowerCase())) {
-                            tags[tag.toLowerCase()] = {
-                                count: 0,
-                                packages: []
-                            };
+                        // Check if the tag is not a package name
+                        if (Object.getOwnPropertyNames(packages.map).indexOf(tag) === -1) {
+                            if (!tags.hasOwnProperty(tag.toLowerCase())) {
+                                tags[tag.toLowerCase()] = {
+                                    count: 0,
+                                    packages: []
+                                };
+                            }
+                            tags[tag.toLowerCase()].count++;
+                            tags[tag.toLowerCase()].packages.push(latestPackageVersion.name);
                         }
-                        tags[tag.toLowerCase()].count++;
-                        tags[tag.toLowerCase()].packages.push(latestPackageVersion.name);
                     });
                 }
             });
