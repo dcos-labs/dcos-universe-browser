@@ -1,6 +1,6 @@
 {
   "name": "dcos-universe-browser",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A browser for the Mesosphere DC/OS Universe",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tobilg/dcos-universe-browser.git"
+    "url": "https://github.com/dcos-labs/dcos-universe-browser.git"
   },
   "keywords": [
     "mesos",
@@ -25,9 +25,9 @@
   "author": "tobilg@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tobilg/dcos-universe-browser/issues"
+    "url": "https://github.com/dcos-labs/dcos-universe-browser/issues"
   },
-  "homepage": "https://github.com/tobilg/dcos-universe-browser",
+  "homepage": "https://github.com/dcos-labs/dcos-universe-browser",
   "dependencies": {
     "express": "^4.14.0",
     "fs2obj": "^0.3.0",
