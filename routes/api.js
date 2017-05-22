@@ -252,7 +252,7 @@ var loadRepository = function () {
                     version: packageObj.version,
                     releaseVersion: packageObj.releaseVersion,
                     packagingVersion: packageObj.packagingVersion,
-                    minDcosReleaseVersion: packageObj.minDcosReleaseVersion,
+                    minDcosReleaseVersion: packageObj.minDcosReleaseVersion ||null,
                     maintainer: packageObj.maintainer || null,
                     website: packageObj.website || null,
                     scm: packageObj.scm || null,
@@ -310,7 +310,6 @@ var loadRepository = function () {
                     });
                 }
             });
-            console.log(JSON.stringify(tags));
 
             // Store the array as pac
             packages.list = tempPackagesArray.sort(generateSortFn("name", false));
