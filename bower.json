@@ -1,8 +1,8 @@
 {
   "name": "dcos-universe-browser",
   "main": "index.js",
-  "version": "0.2.0",
-  "homepage": "https://github.com/tobilg/dcos-universe-browser",
+  "version": "0.3.0",
+  "homepage": "https://github.com/dcos-labs/dcos-universe-browser",
   "authors": [
     "tobilg <tobilg@gmail.com>"
   ],
@@ -25,8 +25,7 @@
     "angular-sanitize": "^1.5.8",
     "angular-animate": "^1.5.8",
     "angular-touch": "^1.5.8",
-    "angular-truncate": "*",
-    "angulartics-google-analytics": "^0.3.0"
+    "angular-truncate": "*"
   },
   "resolutions": {
     "angular": "1.5.8"

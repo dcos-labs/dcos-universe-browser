@@ -1,6 +1,6 @@
 {
   "name": "dcos-universe-browser",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A browser for the Mesosphere DC/OS Universe",
   "main": "index.js",
   "scripts": {

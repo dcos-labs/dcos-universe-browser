@@ -4,8 +4,6 @@ var app = angular.module("universe-browser", [
     "ngSanitize",
     "ui.bootstrap",
     "truncate",
-    "angulartics",
-    "angulartics.google.analytics",
 	"universe-browser.config",
 	"universe-browser.controllers",
 	"universe-browser.services"
