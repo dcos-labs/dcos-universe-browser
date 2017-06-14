@@ -6,7 +6,7 @@
   "container": {
     "type": "DOCKER",
     "docker": {
-      "image": "dcoslabs/dcos-universe-browser:0.1.5",
+      "image": "dcoslabs/dcos-universe-browser:0.3.0",
       "network": "HOST",
       "privileged": false,
       "forcePullImage": false
