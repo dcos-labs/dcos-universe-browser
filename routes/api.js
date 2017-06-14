@@ -14,6 +14,7 @@ var fs2obj = require('fs2obj');
 
 // Project modules
 var config = require("../lib/config");
+var packageDetails = require("../package.json");
 
 // Define base folder for dcos/examples repo
 var dcosExamplesFolder = path.join(__dirname, "../", "dcos-examples");
@@ -439,6 +440,14 @@ router.get("/health", function(req, res) {
 router.get("/tags", function(req, res) {
 
     res.json(tags);
+
+});
+
+router.get("/version", function(req, res) {
+
+    res.json({
+        "version": packageDetails.version
+    });
 
 });
 
