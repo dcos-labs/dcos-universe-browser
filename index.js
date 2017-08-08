@@ -20,7 +20,7 @@ morgan.token("remote-addr", function (req) {
 });
 
 // Define log directory
-var logDirectory = path.join(__dirname, config.application.logFolder);
+var logDirectory = config.application.logFolder;
 
 // Ensure log directory exists
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
