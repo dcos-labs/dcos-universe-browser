@@ -1,5 +1,5 @@
 # Logs
-*.log
+*.log f
 npm-debug.log*
 
 # Runtime data
