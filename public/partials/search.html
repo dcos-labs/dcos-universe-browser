@@ -4,7 +4,7 @@
             <div class="col-sm-8 col-sm-offset-2">
                 <div class="header-content">
                     <div class="header-content-inner">
-                        <h1>Search and browse the packages of the DC/OS Universe!</h1>
+                        <h1>Search the Mesosphere DC/OS Service Catalog:</h1>
                         <form>
                             <script type="text/ng-template" id="customTemplate.html">
                                 <a analytics-on="click">
@@ -16,7 +16,7 @@
                                     </div>
                                 </a>
                             </script>
-                            <input type="text" ng-model="selectedPackage" placeholder="Universe packages" uib-typeahead="pkag as pkag.name for pkag in searchPackages($viewValue)" typeahead-template-url="customTemplate.html" typeahead-on-select="showPackageDetails($item, $model, $label, $event)" typeahead-wait-ms="25" class="form-control input-lg transparent-input">
+                            <input type="text" ng-model="selectedPackage" placeholder="Services" uib-typeahead="pkag as pkag.name for pkag in searchPackages($viewValue)" typeahead-template-url="customTemplate.html" typeahead-on-select="showPackageDetails($item, $model, $label, $event)" typeahead-wait-ms="25" class="form-control input-lg transparent-input">
                         </form>
                     </div>
                 </div>
