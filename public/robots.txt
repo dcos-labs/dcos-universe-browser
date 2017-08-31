@@ -1,4 +1,4 @@
-# robots.txt for http://universe.serv.sh/
+# robots.txt for http://universe.dcos.io/
 
 User-agent: *
 
