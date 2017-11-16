@@ -96,23 +96,44 @@ function fillExamples() {
 
     // Iterate over items
     folderStructure.items.forEach(function (item) {
-        // Use folders
+        // Use folders / exclude the old 1.8 folder
         if (item.type === "folder" && item.name !== "1.8") {
+            // Set package name
             var packageName = item.name.toLowerCase();
             // Set baseUrl
             var baseUrl = "https://raw.githubusercontent.com/dcos/examples/master/" + packageName + "/";
-            // Example version
-            var exampleVersion = null;
-            // Check if 1.9 example exists
-            if (fs.existsSync(dcosExamplesFolder + "/" + packageName + "/1.9/README.md")) {
-                exampleVersion = "1.9";
-            } else if (fs.existsSync(dcosExamplesFolder + "/" + packageName + "/1.8/README.md")) {
-                exampleVersion = "1.8";
+            // Example versions
+            var exampleVersions = [];
+            // Check for examples
+            if (item.items && Array.isArray(item.items)) {
+                // Iterate and check for DC/OS versions
+                item.items.forEach(function (subItem) {
+                    if (subItem.type === "folder" && subItem.name.indexOf("1.") > -1) {
+                        // Add to versions
+                        exampleVersions.push(subItem.name);
+                    }
+                });
+                // Sort semantic versions
+                exampleVersions.sort(function (a, b) { // From https://stackoverflow.com/a/16187766/1603357
+                    var i, diff;
+                    var regExStrip0 = /(\.0+)+$/;
+                    var segmentsA = a.replace(regExStrip0, '').split('.');
+                    var segmentsB = b.replace(regExStrip0, '').split('.');
+                    var l = Math.min(segmentsA.length, segmentsB.length);
+
+                    for (i = 0; i < l; i++) {
+                        diff = parseInt(segmentsA[i], 10) - parseInt(segmentsB[i], 10);
+                        if (diff) {
+                            return diff;
+                        }
+                    }
+                    return segmentsA.length - segmentsB.length;
+                });
             }
             // Check if we have a valid example
-            if (exampleVersion) {
-                // Read README.md contents
-                var exampleContents = fs.readFileSync(dcosExamplesFolder + "/" + packageName + "/" + exampleVersion + "/README.md", "utf8").toString();
+            if (exampleVersions.length > 0) {
+                // Read README.md contents (for the latest existing version)
+                var exampleContents = fs.readFileSync(dcosExamplesFolder + "/" + packageName + "/" + exampleVersions[exampleVersions.length-1] + "/README.md", "utf8").toString();
                 // Get relative links
                 var relativeLinks = exampleContents.match(relativeLinkRegExp);
                 // Check if anchor links found
@@ -125,12 +146,13 @@ function fillExamples() {
                     });
                 }
                 // Convert to HTML and replace image sources
-                var htmlCode = converter.makeHtml(exampleContents).replace(/img\//g, baseUrl + "/" + exampleVersion + "/img/"); // Replace relative URL with absolute URL
+                var htmlCode = converter.makeHtml(exampleContents).replace(/img\//g, baseUrl + "/" + exampleVersions[exampleVersions.length-1] + "/img/"); // Replace relative URL with absolute URL
 
                 // There is an example for this package
                 exampleCache[packageName] = {
                     renderedHtml: htmlCode,
-                    enabled: true
+                    enabled: true,
+                    exampleVersion: exampleVersions[exampleVersions.length-1]
                 };
             }
         }
