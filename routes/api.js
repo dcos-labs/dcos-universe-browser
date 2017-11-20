@@ -103,11 +103,8 @@ function fillExamples() {
             var baseUrl = "https://raw.githubusercontent.com/dcos/examples/master/" + packageName + "/";
             // Example version
             var exampleVersion = null;
-            // Check if 1.10 example exists
-            if (fs.existsSync(dcosExamplesFolder + "/" + packageName + "/1.10/README.md")) {
-                exampleVersion = "1.10";
             // Check if 1.9 example exists
-            } else if (fs.existsSync(dcosExamplesFolder + "/" + packageName + "/1.9/README.md")) {
+            if (fs.existsSync(dcosExamplesFolder + "/" + packageName + "/1.9/README.md")) {
                 exampleVersion = "1.9";
             } else if (fs.existsSync(dcosExamplesFolder + "/" + packageName + "/1.8/README.md")) {
                 exampleVersion = "1.8";
