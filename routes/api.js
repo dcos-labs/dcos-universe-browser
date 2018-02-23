@@ -248,8 +248,7 @@ var loadRepository = function () {
                 var screenshots = {};
 
                 // Replace plain http image urls with https urls, to get rid of mixed-content warnings
-                // Workaround for excluding erroneous packages"dynatrace", "sysdig-cloud" -> Remove once they're fixed
-                if (packageObj.resource && packageObj.resource.images && Object.getOwnPropertyNames(packageObj.resource.images).length > 0 && ["dynatrace", "sysdig-cloud"].indexOf(packageObj.name) === -1) {
+                if (packageObj.resource && packageObj.resource.images && Object.getOwnPropertyNames(packageObj.resource.images).length > 0 {
                     if (packageObj.resource.images.screenshots) {
                         screenshots = packageObj.resource.images.screenshots;
                         delete packageObj.resource.images.screenshots;
