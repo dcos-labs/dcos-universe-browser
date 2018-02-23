@@ -180,6 +180,7 @@ var packages = {
         this.field("tags", {boost: 10});
         this.field("description");
         this.field("releaseVersion");
+        this.field("selected");
         this.ref("name")
     }),
     map: {},
@@ -196,6 +197,7 @@ var resetPackages = function () {
         this.field("tags", {boost: 10});
         this.field("description");
         this.field("releaseVersion");
+        this.field("selected");
         this.ref("name")
     });
     // Reset other properties
@@ -240,7 +242,8 @@ var loadRepository = function () {
                         versions: {},
                         releaseVersions: {},
                         latest: null,
-                        latestVersion: -1
+                        latestVersion: -1,
+                        selected: false
                     }
                 }
 
@@ -270,6 +273,7 @@ var loadRepository = function () {
                     id: packageObj.name + "-" + packageObj.releaseVersion,
                     name: packageObj.name,
                     description: packageObj.description,
+                    selected: packageObj.selected || false,
                     tags: packageObj.tags,
                     version: packageObj.version,
                     releaseVersion: packageObj.releaseVersion,
@@ -312,6 +316,7 @@ var loadRepository = function () {
                 packages.index.add({
                     name: latestPackageVersion.name,
                     description: latestPackageVersion.description,
+                    selected: latestPackageVersion.selected,
                     tags: latestPackageVersion.tags,
                     releaseVersion: latestPackageVersion.releaseVersion
                 });
