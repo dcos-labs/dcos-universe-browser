@@ -166,8 +166,8 @@ function fillExamples() {
 // Set request options
 var options = {
     "headers": {
-        "user-agent": "dcos/1.10",
-        "accept": "application/vnd.dcos.universe.repo+json;charset=utf-8;version=v3"
+        "user-agent": "dcos/1.11",
+        "accept": "application/vnd.dcos.universe.repo+json;charset=utf-8;version=v4"
     },
     "uri": "https://universe.mesosphere.com/repo",
     "method": "GET"
