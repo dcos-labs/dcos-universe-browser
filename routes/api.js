@@ -248,7 +248,7 @@ var loadRepository = function () {
                 var screenshots = {};
 
                 // Replace plain http image urls with https urls, to get rid of mixed-content warnings
-                if (packageObj.resource && packageObj.resource.images && Object.getOwnPropertyNames(packageObj.resource.images).length > 0 {
+                if (packageObj.resource && packageObj.resource.images && Object.getOwnPropertyNames(packageObj.resource.images).length > 0){
                     if (packageObj.resource.images.screenshots) {
                         screenshots = packageObj.resource.images.screenshots;
                         delete packageObj.resource.images.screenshots;
