@@ -132,8 +132,11 @@ function fillExamples() {
             }
             // Check if we have a valid example
             if (exampleVersions.length > 0) {
+                console.log("Example version >0");
                 var filename = dcosExamplesFolder + "/" + packageName + "/" + exampleVersions[exampleVersions.length-1] + "/README.md";
+                console.log("Filename: " + filename);
                 if (fs.existsSync(filename)) {
+                    console.log("Filename: exists");
                     // Read README.md contents (for the latest existing version)
                     var exampleContents = fs.readFileSync(filename, "utf8").toString();
                     // Get relative links
