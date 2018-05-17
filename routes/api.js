@@ -132,28 +132,31 @@ function fillExamples() {
             }
             // Check if we have a valid example
             if (exampleVersions.length > 0) {
-                // Read README.md contents (for the latest existing version)
-                var exampleContents = fs.readFileSync(dcosExamplesFolder + "/" + packageName + "/" + exampleVersions[exampleVersions.length-1] + "/README.md", "utf8").toString();
-                // Get relative links
-                var relativeLinks = exampleContents.match(relativeLinkRegExp);
-                // Check if anchor links found
-                if (relativeLinks && relativeLinks.length > 0) {
-                    // Handle relative links -> Replace with full link including the anchor
-                    relativeLinks.forEach(function (relativeLink) {
-                        var bareLink = relativeLink.replace("(", "").replace(")", "").replace(/-/g, "");
-                        var replaceRelativeLink = "(/#/package/" + packageName + "/docs" + bareLink + ")";
-                        exampleContents = exampleContents.replace(relativeLink, replaceRelativeLink)
-                    });
-                }
-                // Convert to HTML and replace image sources
-                var htmlCode = converter.makeHtml(exampleContents).replace(/img\//g, baseUrl + "/" + exampleVersions[exampleVersions.length-1] + "/img/"); // Replace relative URL with absolute URL
+                var filename = dcosExamplesFolder + "/" + packageName + "/" + exampleVersions[exampleVersions.length-1] + "/README.md";
+                if (fs.existsSync(filename)) {
+                    // Read README.md contents (for the latest existing version)
+                    var exampleContents = fs.readFileSync(filename, "utf8").toString();
+                    // Get relative links
+                    var relativeLinks = exampleContents.match(relativeLinkRegExp);
+                    // Check if anchor links found
+                    if (relativeLinks && relativeLinks.length > 0) {
+                        // Handle relative links -> Replace with full link including the anchor
+                        relativeLinks.forEach(function (relativeLink) {
+                            var bareLink = relativeLink.replace("(", "").replace(")", "").replace(/-/g, "");
+                            var replaceRelativeLink = "(/#/package/" + packageName + "/docs" + bareLink + ")";
+                            exampleContents = exampleContents.replace(relativeLink, replaceRelativeLink)
+                        });
+                    }
+                    // Convert to HTML and replace image sources
+                    var htmlCode = converter.makeHtml(exampleContents).replace(/img\//g, baseUrl + "/" + exampleVersions[exampleVersions.length-1] + "/img/"); // Replace relative URL with absolute URL
 
-                // There is an example for this package
-                exampleCache[packageName] = {
-                    renderedHtml: htmlCode,
-                    enabled: true,
-                    exampleVersion: exampleVersions[exampleVersions.length-1]
-                };
+                    // There is an example for this package
+                    exampleCache[packageName] = {
+                        renderedHtml: htmlCode,
+                        enabled: true,
+                        exampleVersion: exampleVersions[exampleVersions.length-1]
+                    };
+                }
             }
         }
     });
