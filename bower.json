@@ -20,11 +20,11 @@
     "angular": "1.5.8",
     "angular-resource": "1.5.8",
     "angular-route": "1.5.8",
-    "angular-bootstrap": "^2.2.0",
-    "angular-ui-select": "^0.19.6",
-    "angular-sanitize": "^1.5.8",
-    "angular-animate": "^1.5.8",
-    "angular-touch": "^1.5.8",
+    "angular-bootstrap": "2.2.0",
+    "angular-ui-select": "0.19.6",
+    "angular-sanitize": "1.5.8",
+    "angular-animate": "1.5.8",
+    "angular-touch": "1.5.8",
     "angular-truncate": "*"
   },
   "resolutions": {
